@@ -1,0 +1,15 @@
+pipeline {
+	agent any
+	tools {
+		nodejs 'NodeJS'
+	}
+	environment {
+		DOCKER_HUB_REPO = ''
+		DOCKER_HUB_CREDENTIALS_ID = ''
+	}
+	stages {
+		stage('Checkout Github'){
+			steps {
+			git branch: 'main', credentialsId: '', url: ''
+			}
+		}
