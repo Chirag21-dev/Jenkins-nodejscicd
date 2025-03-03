@@ -13,5 +13,8 @@ pipeline {
 			checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Chirag21-dev/Jenkins-nodejscicd.git']])
 			}
 		}
+<<<<<<< HEAD
 	}
 }
+=======
+>>>>>>> e5899ed242ffb792b8698d3e3541c4c439b96e9a
