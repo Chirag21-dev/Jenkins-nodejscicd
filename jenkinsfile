@@ -1,5 +1,8 @@
 pipeline {
 	agent any
+	tools {
+		nodejs 'NodeJS'
+	}
 	
 	environment {
 		DOCKER_HUB_REPO = ''
@@ -11,5 +14,12 @@ pipeline {
 			checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Chirag21-dev/Jenkins-nodejscicd.git']])
 			}
 		}
+		stage('Unit Test'){
+			steps {
+				sh 'npm test'
+				sh 'npm install'		
+			}
+		}
 	}
+
 }
