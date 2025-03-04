@@ -1,8 +1,6 @@
 pipeline {
 	agent any
-	tools {
-		
-	}
+	
 	environment {
 		DOCKER_HUB_REPO = ''
 		DOCKER_HUB_CREDENTIALS_ID = ''
