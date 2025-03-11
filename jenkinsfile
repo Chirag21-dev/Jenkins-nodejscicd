@@ -5,7 +5,7 @@ pipeline {
 	}
 	
 	environment {
-		DOCKER_HUB_REPO = ''
+		DOCKER_HUB_REPO = 'chiragks1/jenkins_nodejs'
 		DOCKER_HUB_CREDENTIALS_ID = ''
 		SONAR_PROJECT_KEY = 'Jenkins-nodejscicd'
 		SONAR_SCANNER_HOME = tool 'sonarqube-scanner'
@@ -38,6 +38,15 @@ pipeline {
 				}
 			}
 	}
+
+	
+	stage('Docker Image'){
+			steps {
+				script {
+					docker.build("${DOCKER_HUB_REPO}:latest")
+				}
+			}
+		}
 
 }
 }
