@@ -39,12 +39,17 @@ pipeline {
 			}
 	}
 
-	
+
 	stage('Docker Image'){
 			steps {
 				script {
 					docker.build("${DOCKER_HUB_REPO}:latest")
 				}
+			}
+		}
+		stage('Trivy Scan'){
+			steps {
+				sh 'trivy --severity HIGH,CRITICAL --no-progress --format table -o trivy-report.html image ${DOCKER_HUB_REPO}:latest'
 			}
 		}
 
