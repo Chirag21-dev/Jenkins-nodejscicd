@@ -7,6 +7,8 @@ pipeline {
 	environment {
 		DOCKER_HUB_REPO = ''
 		DOCKER_HUB_CREDENTIALS_ID = ''
+		SONAR_PROJECT_KEY = 'Jenkins-nodejscicd'
+		SONAR_SCANNER_HOME = tool 'sonarqube-scanner'
 	}
 	stages {
 		stage('Checkout Github'){
@@ -22,19 +24,20 @@ pipeline {
 		}
 		stage('SonarQube Analysis'){
 			steps {
-				withCredentials([string(credentialsId: '', variable: )]) {
+				withCredentials([string(credentialsId: 'complete_cicdsonartoken', variable: 'sonarqube')])  {
     					
-					withSonarQubeEnv('SonarQube') {
+					withSonarQubeEnv('sonarqube-scanner') {
     						sh """
 						${SONAR_SCANNER_HOME}/bin/sonar-scanner \
 						-Dsonar.projectKey=${SONAR_PROJECT_KEY} \
 						-Dsonar.sources=. \
 						-Dsonar.host.url= \
-						-Dsonar.login=${SONAR_TOKEN}
+						-Dsonar.login=${sonarqube}
 						"""
 					}
 				}
 			}
 	}
 
+}
 }
