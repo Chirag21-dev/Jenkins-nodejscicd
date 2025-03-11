@@ -22,7 +22,7 @@ pipeline {
 				sh 'npm install'		
 			}
 		}
-		stage('SonarQube Analysis'){
+		stage('perform SonarQube Analysis'){
 			steps {
 				withCredentials([string(credentialsId: 'complete_cicdsonartoken', variable: 'sonarqube')])  {
     					
