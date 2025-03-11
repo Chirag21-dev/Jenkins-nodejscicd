@@ -6,7 +6,7 @@ pipeline {
 	
 	environment {
 		DOCKER_HUB_REPO = 'chiragks1/jenkins_nodejs'
-		DOCKER_HUB_CREDENTIALS_ID = ''
+		DOCKER_HUB_CREDENTIALS_ID = 'Docker_hub_cred'
 		SONAR_PROJECT_KEY = 'Jenkins-nodejscicd'
 		SONAR_SCANNER_HOME = tool 'sonarqube-scanner'
 	}
@@ -43,7 +43,7 @@ pipeline {
 	stage('Docker Image'){
 			steps {
 				script {
-					docker.build("${DOCKER_HUB_REPO}:latest")
+					dockerimage= docker.build("${DOCKER_HUB_REPO}:latest")
 				}
 			}
 		}
@@ -52,6 +52,16 @@ pipeline {
 				sh 'trivy --severity HIGH,CRITICAL --no-progress --format table -o trivy-report.html image ${DOCKER_HUB_REPO}:latest'
 			}
 		}
+    stage('Push Image to dockerhub'){
+			steps {
+				script {
+				docker.withRegistry("https:regisrty.hub.docker.com","${DOCKER_HUB_CREDENTIALS_ID}"){
+					dockerimage.push()
+				}
+				}
+			}
+		}
+
 
 }
 }
